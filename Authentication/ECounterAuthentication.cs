@@ -1,4 +1,4 @@
-namespace stefanini_e_counter
+namespace stefanini_e_counter.Authentication
 {
     public class ECounterAuthentication
     {

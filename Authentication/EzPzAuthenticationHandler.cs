@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
-namespace stefanini_e_counter
+namespace stefanini_e_counter.Authentication
 {
     public class EzPzAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {

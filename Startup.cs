@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using stefanini_e_counter.Authentication;
+using stefanini_e_counter.Logic;
 
 namespace stefanini_e_counter
 {
@@ -23,13 +26,16 @@ namespace stefanini_e_counter
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            
             services.AddOptions();
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.Configure<ECounterAuthentication>(Configuration.GetSection("authentication"));
+            services.Configure<FormProcessingStrategy>(Configuration.GetSection("formProcessingStrategy"));
             services.AddAuthentication("EzPzTokenAuth").AddScheme<AuthenticationSchemeOptions, EzPzAuthenticationHandler>("EzPzTokenAuth", null, null);
             services.AddAuthorization();
-
+            services.AddSingleton<IFormRequestProcessor, FormRequestProcessor>();
             // Behind settings
             services.AddSwaggerGen();
         }
